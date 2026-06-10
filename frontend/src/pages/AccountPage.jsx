@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AccountPage() {
+    const API_URL = import.meta.env.VITE_API_URL;
 
   const [form, setForm] = useState({
     companyName: "",
@@ -39,7 +40,7 @@ async function loadAccount() {
 
   const response =
     await fetch(
-      "http://localhost:8080/api/account",
+      `${API_URL}/api/account`,
       {
         headers: {
           Authorization:
@@ -78,7 +79,7 @@ useEffect(() => {
 
       const response =
         await fetch(
-          "http://localhost:8080/api/account",
+          `${API_URL}/api/account`,
           {
             method: "POST",
             headers: {

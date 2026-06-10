@@ -1,5 +1,5 @@
-package com.retail.backend.config;
 
+package com.retail.backend.auth.dto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -1,5 +1,4 @@
-const API_URL =
-  "http://localhost:8080/api/dashboard/stats";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/dashboard/stats`;
 
 export async function getDashboardStats() {
 

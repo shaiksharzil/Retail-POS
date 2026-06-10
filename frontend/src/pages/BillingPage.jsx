@@ -13,10 +13,11 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
 export default function BillingPage() {
+
     const receiptRef = useRef();
     const navigate =
       useNavigate();
-
+      const API_URL = import.meta.env.VITE_API_URL;
   const [products,
           setProducts]
     = useState([]);
@@ -37,7 +38,7 @@ export default function BillingPage() {
 
         const response =
           await fetch(
-            "http://localhost:8080/api/account",
+            `${API_URL}/api/account`,
             {
               headers: {
                 Authorization:
@@ -104,7 +105,7 @@ async function loadAccount() {
 
     const response =
       await fetch(
-        "http://localhost:8080/api/account",
+        `${API_URL}/api/account`,
         {
           headers: {
             Authorization:

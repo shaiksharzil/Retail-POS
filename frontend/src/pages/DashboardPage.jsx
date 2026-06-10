@@ -4,6 +4,7 @@ import { getProducts } from "../api/productApi";
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
   const [products, setProducts] = useState([]);
   const [report, setReport] = useState([]);
 
@@ -15,7 +16,7 @@ export default function DashboardPage() {
       const data = await getDashboardStats();
       const token = localStorage.getItem("token");
 
-      const reportResponse = await fetch("http://localhost:8080/api/reports", {
+      const reportResponse = await fetch(`${API_URL}/api/reports`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -6,6 +6,7 @@ export default function ReportsPage() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [baseReport, setBaseReport] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   async function loadFilteredReport() {
     if (!fromDate || !toDate) {
@@ -15,7 +16,7 @@ export default function ReportsPage() {
 
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `http://localhost:8080/api/reports/filter?from=${fromDate}&to=${toDate}`,
+      `${API_URL}/api/reports/filter?from=${fromDate}&to=${toDate}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,7 +41,7 @@ export default function ReportsPage() {
   useEffect(() => {
     async function load() {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8080/api/reports", {
+      const response = await fetch(`${API_URL}/api/reports`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
