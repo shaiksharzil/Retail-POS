@@ -3,6 +3,7 @@ package com.retail.backend.auth.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,12 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final String SECRET =
-            "thisIsASuperSecretKeyForRetailPosApplication123456";
+    @Value("${jwt.secret}")
+    private String secret;
 
-    private final SecretKey key =
-            Keys.hmacShaKeyFor(SECRET.getBytes());
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
     public String generateToken(String email) {
 
@@ -29,7 +31,7 @@ public class JwtService {
                                         + 1000L * 60 * 60 * 24
                         )
                 )
-                .signWith(key)
+                .signWith(getSigningKey())
                 .compact();
     }
 
@@ -60,7 +62,7 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
 
         return Jwts.parser()
-                .verifyWith(key)
+                .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

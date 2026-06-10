@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function App() {
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -11,7 +10,6 @@ export default function App() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -27,7 +25,7 @@ export default function App() {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,6 +43,7 @@ export default function App() {
 
       navigate("/pos/dashboard");
 
+      console.log("JWT:", data.token);
     } catch (err) {
       // In a real scenario, a failed fetch might throw a generic network error.
       // We display it here using our monochrome theme.
@@ -90,7 +89,7 @@ export default function App() {
             </label>
             <input
               id="password"
-              type={showPassword ? "text" : "password"}
+              type="password"
               name="password"
               placeholder="••••••••"
               value={form.password}
@@ -99,28 +98,7 @@ export default function App() {
               required
             />
           </div>
-          <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute cursor-pointer right-145 top-104 -translate-y-1/2 p-1 text-neutral-500 hover:text-black transition-colors"
-                          aria-label={showPassword ? "Hide password" : "Show password"}
-                        >
-                          {showPassword ? (
-                            /* Lucide-style Eye Off Icon */
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                              <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                              <line x1="2" y1="2" x2="22" y2="22" />
-                            </svg>
-                          ) : (
-                            /* Lucide-style Eye Icon */
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                              <circle cx="12" cy="12" r="3" />
-                            </svg>
-                          )}
-                        </button>
+
           {error && (
             <div className="flex items-center gap-3 rounded-lg border border-neutral-300 bg-neutral-100 p-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black shrink-0">
